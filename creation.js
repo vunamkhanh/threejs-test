@@ -1,36 +1,22 @@
-// Set the scene size.
-const WIDTH = 400;
-const HEIGHT = 300;
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-// Set some camera attributes.
-const VIEW_ANGLE = 45;
-const ASPECT = WIDTH / HEIGHT;
-const NEAR = 0.1;
-const FAR = 10000;
+var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
+camera.position.set(0, 0, 100);
+camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-// Get the DOM element to attach to
-const container =
-    document.querySelector('#container');
+var scene = new THREE.Scene();
 
-// Create a WebGL renderer, camera
-// and a scene
-const renderer = new THREE.WebGLRenderer();
-const camera =
-    new THREE.PerspectiveCamera(
-        VIEW_ANGLE,
-        ASPECT,
-        NEAR,
-        FAR
-    );
+//create a blue LineBasicMaterial
+var material = new THREE.LineBasicMaterial({ color: 0x0000ff });
 
-const scene = new THREE.Scene();
+var geometry = new THREE.Geometry();
+geometry.vertices.push(new THREE.Vector3(-10, 0, 0));
+geometry.vertices.push(new THREE.Vector3(0, 10, 0));
+geometry.vertices.push(new THREE.Vector3(10, 0, 0));
 
-// Add the camera to the scene.
-scene.add(camera);
+var line = new THREE.Line(geometry, material);
 
-// Start the renderer.
-renderer.setSize(WIDTH, HEIGHT);
-
-// Attach the renderer-supplied
-// DOM element.
-container.appendChild(renderer.domElement);
+scene.add(line);
+renderer.render(scene, camera);
